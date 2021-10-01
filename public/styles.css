@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+body
+{
+    background-color: #ffff;
+    font-family: 'Roboto', sans-serif;
+}
+.bg-primarycolor
+{
+    background-color: #3f51b5 !important;
+}
+.nav-link
+{
+    color: white;
+}
+.nav-link:hover{
+    color: white;
+}
+.nav-item{
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.navbar-toggler
+{
+    width: 50px;
+}
+.active{
+    background-color: #000983 !important;
+    color:white !important;
+}
+.nav-link{
+    border-radius: 20px;
+}
+.nav-link:hover{
+    background-color: #000983 !important;
+}
+
+.user
+{
+    margin: 100px;
+    color: #ffff;
+}
+.user:hover{
+    color: #ffff;
+}
+
+.d-flex
+{
+    margin-right: 20%;
+    margin-left: 20%;
+}
+.modal-header{
+    background-color: #303f9f;
+    color: #ffff;
+}
+.modal-body{
+    background-color: #ffff;
+}
+.modal-footer{
+    background-color: #ffff;
+}
+
+.close{
+    background-color: #303f9f;
+    border:0;
+}
+.img-small{
+    max-height: 30px;
+    max-width: 30px;
+}
+.img-small-table{
+    max-height: 20px;
+    max-width: 20px;
+}
+.btn-table
+{
+    width: 50px;
+}
+.navbar-toggler{
+    border-color: #303f9f;
+}
+.title, footer
+{
+    background-color: #F2F2F2;    
+    color: #827373; 
+    text-align: center;
+    padding: 10px;
+}
+footer
+{
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+    width: 100%;
+} 
+
+footer .imagenEquipo
+{
+    max-width:150px;
+    height: auto; 
+    box-shadow:10px 7px 10px gray; 
+}
+
+footer .imagenMintic2022
+{  
+    max-width:150px;
+    height: auto;
+    box-shadow:10px 7px 10px gray; 
+}
+#Buscar{
+    width: 90px;
+    height: 40px;
+}
+
+#usuario{
+    margin:1%;
+}
+#btnNuevo
+{
+    width: 200px;
+    margin-left: 30%;
+    margin-bottom: 10px;
+    font-size: 25px;
+}
+#Agregar
+{
+    margin-left: 10px;
+}
+#dropdown-user
+{
+    width: 80px;
+    margin-right: 50px;
+    
+}
+#Logo
+{
+    max-width:200px;
+    height: auto;
+    box-shadow:10px 7px 10px #1e2863; 
+}
