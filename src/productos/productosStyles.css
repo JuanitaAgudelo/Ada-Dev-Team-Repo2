@@ -1,0 +1,52 @@
+.title
+{
+    background-color: #F2F2F2;    
+    color: #827373; 
+    text-align: center;
+    padding: 10px;
+}
+
+.formVendedores
+{   
+    /* width: 50vw; */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 30px;    
+}
+
+input, select{
+    background-color: #F2F2F2 !important;
+    border-radius: 10px !important;
+    color: #827373;
+    font-size: 12px !important;
+    padding: 15px;
+    margin: 5px;
+    width: 340px;
+}
+
+label{
+    color: #827373;
+    font-size: 12px !important;
+    margin: 15px;
+}
+
+button{
+    border-radius: 10px !important;
+    color: #FFFFFF !important;
+    box-shadow: 1px 3px #cbcfcb; 
+}
+
+.btn-add{
+    background-color: #03A9F4;    
+    color: #827373; 
+    text-align: center;
+}
+
+i{
+    font-size: 20px;
+}
+
+th, td{
+    text-align: center;
+}
