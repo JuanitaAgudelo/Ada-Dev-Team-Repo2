@@ -1,0 +1,36 @@
+.botonenviar{
+    padding-left: 25px;
+    padding-right: 25px;
+ }
+ 
+ .fondo-header{
+    background-color: #3F51B5;
+ }
+ 
+ .letra-header{
+    color: #f1f1f6;
+ }
+ 
+ .label-color{
+    color: black;
+    font-weight: bold;
+ }
+ 
+ body{
+    background: #C5CAE9;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #757575, #C5CAE9);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #757575, #C5CAE9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+ 
+ }
+ .bg{
+    background-image: url(../media/img/team.jpg);
+    background-position: center center;
+ }
+ .button:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+ }
+
+ .anchoimagen {
+   width:150px;
+ }

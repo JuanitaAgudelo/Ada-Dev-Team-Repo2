@@ -11,7 +11,7 @@ function Login() {
 
                     <div className="col bg-white pb-5 col-lg-7 col-xl-6 rounded-end">
                         <div className="text-end mt-3 mb-4">
-                            <img src="./media/img/logo.jpeg" alt="" style="width:150px" className="pt-1" />
+                            <img src="./media/img/logo.jpeg" alt="" className="pt-1 anchoimagen" />
                         </div>
                         <h2 className="fw-bold text-center pt-5 mb-5">Bienvenido</h2>
                         <div className="w-75 my-4 ms-5 d-grid">
@@ -58,3 +58,5 @@ function Login() {
         </div>
     )
 }
+
+export default Login;
