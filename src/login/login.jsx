@@ -1,4 +1,5 @@
 import './css/styles.css';
+import logogmail from "./media/img/gmail.png"
 
 function Login() {
     return (
@@ -16,7 +17,7 @@ function Login() {
                         <h2 className="fw-bold text-center pt-5 mb-5">Bienvenido</h2>
                         <div className="w-75 my-4 ms-5 d-grid">
                             <button className="btn btn-primary mb-4" type="button">
-                                        <img src="./media/img/gmail.png" width="30px" alt="" className="me-4" />
+                                        <img src={logogmail} width="30px" alt="" className="me-4" />
                                         Inicia Sesión
                             </button>
                             <button type="button" className="btn btn-light btn-outline-dark border-primary mt-5" data-bs-toggle="modal" data-bs-target="#modalCRUD2">Regístrate</button>
