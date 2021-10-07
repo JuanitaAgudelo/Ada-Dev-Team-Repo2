@@ -4,7 +4,7 @@ function TablaUsuarios() {
     return (
         <div className="container">
             <div className="row">
-                <div className="mt-5"></div>
+                <div className="mt-5"></div> 
                 <div className="col-lg-12">
                     <div className="table-responsive">
                         <table id="TableUser" className="table table-hover table-striped table-bordered">
