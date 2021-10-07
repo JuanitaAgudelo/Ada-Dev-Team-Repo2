@@ -15,11 +15,13 @@ function App() {
           <h1>Home</h1>
         </Route>
         <Route path="/Ventas" exact>
-          <h1>Ventas</h1>         
-          
+          <h1>Ventas</h1>     
         </Route>
         <Route path="/Productos" exact>          
           <ProductosPage></ProductosPage>
+        </Route>
+        <Route path="/ListadoProductos" exact>          
+          <ListadoProductosPage></ListadoProductosPage>
         </Route>
         <Route path="/Usuarios" exact>
           <BarraBusqueda/>

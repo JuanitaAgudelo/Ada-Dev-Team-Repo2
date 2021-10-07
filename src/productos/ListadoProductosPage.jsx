@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import './productosStyles.css';
+import Editar from "./img/edit-regular.svg";
 import HeaderComponent from '../shared/components/header/HeaderComponent';
 import FooterComponent from '../shared/components/footer/FooterComponent';
 
@@ -32,12 +33,12 @@ function ListadoProductosPage(){
         </div>
 
         {/* <!-- Table Productos --> */}
-        <div class="container">
-            <div class="row-12">
-                <div class="column-4">                    
+        <div className="container">
+            <div className="row-12">
+                <div className="column-4">                    
                 </div>
-                <div class="column-4"> 
-                    <table class="table table-striped">       
+                <div className="column-4"> 
+                    <table className="table table-striped">       
                     <thead>
                         <tr>
                         <th scope="col">idProducto</th>
@@ -56,8 +57,8 @@ function ListadoProductosPage(){
                         <td>1500</td>
                         <td>Disponible</td>
                         <td>
-                            <button class="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
-                                <i class="far fa-edit"></i>
+                            <button className="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
+                                <i className="far fa-edit"></i>
                             </button>
                         </td>                
                         </tr>
@@ -68,8 +69,8 @@ function ListadoProductosPage(){
                             <td>2500</td>
                             <td>Disponible</td>
                         <td>
-                            <button class="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
-                                <i class="far fa-edit"></i>
+                            <button className="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
+                                <i className="far fa-edit"></i>
                             </button>
                         </td>                   
                         </tr>
@@ -81,8 +82,8 @@ function ListadoProductosPage(){
                             <td>No Disponible</td>
 
                             <td>
-                                <button class="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
-                                    <i class="far fa-edit"></i>
+                                <button className="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
+                                    <i className="far fa-edit"></i>
                                 </button>
                             </td> 
                         </tr>
@@ -93,15 +94,15 @@ function ListadoProductosPage(){
                             <td>800</td>
                             <td>Disponible</td>
                             <td>
-                                <button class="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
-                                    <i class="far fa-edit"></i>
+                                <button className="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
+                                    <i className="far fa-edit"></i>
                                 </button>                                
                             </td> 
                         </tr>
                     </tbody>          
                     </table>
                 </div>
-                <div class="column-4">                    
+                <div className="column-4">                    
                 </div>
             </div>
         </div> 

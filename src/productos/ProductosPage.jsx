@@ -1,4 +1,5 @@
 import React, { Fragment, useState, Route } from 'react';
+import { NavLink } from 'react-router-dom';
 import './productosStyles.css';
 import HeaderComponent from '../shared/components/header/HeaderComponent';
 import FooterComponent from '../shared/components/footer/FooterComponent';
@@ -31,8 +32,8 @@ function ProductosPage(){
                             <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Estado" />
                         </div>                         
                         <div className="d-grid gap-2 d-md-block">
-                            <button className="btn btn-success" type="button" data-bs-toggle="modal"  data-bs-target="#confirmProduct">Registrar</button>
-                            <button className="btn btn-info" type="button"><a href="./listadoProductos.html">Consultar</a></button>
+                            <button className="btn btn-success mx-2" type="button" data-bs-toggle="modal"  data-bs-target="#confirmProduct">Registrar</button>
+                            <button className="btn btn-info mx-2" type="button"><NavLink to="/ListadoProductos" >Consultar</NavLink></button>
                         </div>
                     </div>
                 </div>
@@ -41,25 +42,25 @@ function ProductosPage(){
             </div>
         </div> 
         {/* <!-- Modal --> */}
-        <div class="modal" id='confirmProduct' tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Confirmar Registro Producto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div className="modal" id='confirmProduct' tabindex="-1">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">Confirmar Registro Producto</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Id Producto" disabled/>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Nombre"/>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Descripción"/>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Valor Unitario"/>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Estado"/>
+                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Id Producto" disabled/>
+                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Nombre"/>
+                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Descripción"/>
+                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Valor Unitario"/>
+                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Estado"/>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"  data-bs-toggle="modal"  data-bs-target="#registerProduct">Registrar</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" className="btn btn-primary"  data-bs-toggle="modal"  data-bs-target="#registerProduct">Registrar</button>
                     </div>
                 </div>
             </div>
@@ -68,20 +69,20 @@ function ProductosPage(){
       {/* <!-- Modal 2 --> */}
 
         <div class="modal" id="registerProduct" tabindex="-1">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Producto Registrado</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal-dialog">
+            <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title">Producto Registrado</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">                    
+                <div className="modal-body">                    
                     <p>Se ha registrado el producto con id: ..., <br/>
                         con nombre: ..., <br/>
                         con la siguiente descripción: ..., <br/>
                         y estado: ...</p>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>              
+                <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>              
                 </div>
             </div>
             </div>
