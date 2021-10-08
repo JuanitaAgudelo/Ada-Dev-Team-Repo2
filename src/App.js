@@ -4,13 +4,14 @@ import HeaderComponent from './shared/components/header/HeaderComponent';
 import FooterComponent from './shared/components/footer/FooterComponent';
 import BarraBusqueda from './Usuario-roles/Barra-busqueda/BarraBusqueda';
 import TablaUsuarios from './Usuario-roles/Tabla-usuarios/TablaUsuarios';
+import Home from './Home/home';
 function App() {
   return (
     <Router>
       <HeaderComponent/>
       <Switch>
         <Route path="/Home" exact>
-          <h1>Home</h1>
+          <Home/>
         </Route>
         <Route path="/Ventas" exact>
           <h1>Ventas</h1>
