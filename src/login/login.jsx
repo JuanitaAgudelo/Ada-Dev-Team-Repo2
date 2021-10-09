@@ -1,7 +1,15 @@
+import React, { useState, useEffect } from 'react';
+import Axios from 'axios'; 
 import './css/styles.css';
 import logogmail from "./media/img/gmail.png"
 
 function Login() {
+    const [name,setName] = useState('')
+    const [email,setEmail] = useState('')
+    const submitEmail = ()=> {
+        Axios.post ("http://localhost:3001/add-product",{name:name, email: email})
+    }
+
     return (
         <div className="Login">
             <div className="container w-100 bg-primary mt-4 mb-4 rounded shadow" >
@@ -39,17 +47,17 @@ function Login() {
                         <form id="formEditar">
                             <div className="modal-body">
                                 <div className ="form-group">
-                                    <label for="ID" className ="col-form-label label-color">Nombre: </label>
-                                    <input type ="text" className ="form-control border-dark" id="ID" placeholder="Nombre" value="" />
+                                    <label for="Name" className ="col-form-label label-color">Nombre: </label>
+                                    <input type ="text" className ="form-control border-dark" id="Name" placeholder="Nombre" onChange={(e)=>{setName(e.target.value)}}/>
                                 </div>
                                 <div className ="form-group">
                                     <label for="Correo" className ="col-form-label label-color">Correo: </label>
-                                    <input type ="text" className ="form-control border-dark" id="Correo" placeholder="Correo" value="" />
+                                    <input type ="text" className ="form-control border-dark" id="Correo" placeholder="Correo" onChange={(e)=>{setEmail(e.target.value)}}/>
                                 </div>
                             </div>
                             <div className ="modal-footer">
                             <button className ="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type ="submit" id="btnEditar" className ="btn btn-primary botonenviar">Enviar</button>
+                            <button type ="submit" id="btnEnviar" className ="btn btn-primary botonenviar" onClick={submitEmail}>Enviar</button>
                             </div>
                         </form>
                     </div>
