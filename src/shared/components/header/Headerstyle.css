@@ -1,0 +1,57 @@
+.bg-primarycolor
+{
+    background-color: #3f51b5 !important;
+}
+.nav-link
+{
+    color: white;
+}
+.nav-link:hover{
+    color: white;
+}
+.nav-item{
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.navbar-toggler
+{
+    width: 50px;
+}
+.active{
+    background-color: #000983 !important;
+    color:white !important;
+}
+.nav-link{
+    border-radius: 20px;
+}
+.nav-link:hover{
+    background-color: #000983 !important;
+}
+
+.user
+{
+    margin: 100px;
+    color: #ffff;
+}
+.user:hover{
+    color: #ffff;
+}
+.img-small{
+    max-height: 30px;
+    max-width: 30px;
+}
+.navbar-toggler{
+    border-color: #303f9f;
+}
+#Logo
+{
+    max-width:200px;
+    height: auto;
+    box-shadow:10px 7px 10px #1e2863; 
+}
+#dropdown-user
+{
+    width: 80px;
+    margin-right: 50px;
+    
+}

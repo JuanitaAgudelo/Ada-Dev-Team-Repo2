@@ -2,11 +2,16 @@ import React, { Component, useState, useEffect } from "react";
 import Editar from "./img/edit-regular.svg";
 import Buscar from "./img/search-solid.svg";
 import Axios from "axios";
+import ReactPaginate from 'react-paginate';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import './TablaUsuariosStyle.css';
 class TablaUsuarios extends Component {
     state = {
         usuarios: [],
         tablausuarios: [],
+        perPage: 10,
+        page: 0,
+        pages: 0,
         modalEditar: false,
         busqueda:"",
         usuario: {
@@ -19,12 +24,14 @@ class TablaUsuarios extends Component {
 
     peticionGet = () => {
         Axios.get('http://localhost:3001/Usuarios').then(response => {
+            const {perPage}=this.state;
             this.setState({
-                usuarios: response.data
+                usuarios: response.data,
+                tablausuarios: response.data,
             });
             this.setState({
-                tablausuarios: response.data
-            });
+                pages: Math.ceil(this.state.usuarios.length / perPage)
+            })
         });
     }
     peticionGetusuario = () => {
@@ -80,11 +87,15 @@ class TablaUsuarios extends Component {
             usuarios: resultadoBusqueda
         });
     }
+    handlePageClick = (e) => {
+        let page = e.selected;
+        this.setState({page})
+    }
     componentDidMount() {
         this.peticionGet();
     }
     render() {
-        const { usuarios } = this.state;
+        const { page, perPage, pages, usuarios } = this.state;
         return (
             <div className="container">
                 <div class="container-fluid">
@@ -113,7 +124,7 @@ class TablaUsuarios extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {usuarios.map((usuario) => {
+                                    {usuarios.slice(page*perPage, (page+1)*perPage).map((usuario) => {
                                         return (
                                             <tr key={usuario.id}>
                                                 <th scope="row">{usuario.id}</th>
@@ -136,36 +147,21 @@ class TablaUsuarios extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-sm-12 col-md-5">
-                        <div className="dataTables_info" role="status" aria-live="polite">
-                            Registros 1 a 10 de 20</div>
-                    </div>
-                    <div className="col-sm-12 col-md-7">
-                        <div className="dataTables_paginate paging_simple_numbers d-flex justify-content-end">
-                            <ul className="pagination">
-                                <li className="paginate_button page-item previous disabled" id="btn-Anterior">
-                                    <a href="#" aria-controls="TableUser" data-dt-idx="0" tabindex="0" className="page-link">Anterior</a>
-                                </li>
-                                <li className="paginate_button page-item active">
-                                    <a href="#" aria-controls="TableUser" data-dt-idx="1" tabindex="0" className="page-link">1</a>
-                                </li>
-                                <li className="paginate_button page-item ">
-                                    <a href="#" aria-controls="TableUser" data-dt-idx="2" tabindex="0" className="page-link">2</a>
-                                </li>
-                                <li className="paginate_button page-item next" id="btn-Siguiente">
-                                    <a href="#" aria-controls="TableUser" data-dt-idx="3" tabindex="0" className="page-link">Siguiente</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div className="col-sm-12">
+                        <ReactPaginate
+                        previousLabel={'<-'} 
+                        nextLabel={'->'} 
+                        pageCount={pages}
+                        onPageChange={this.handlePageClick} 
+                        containerClassName={'pagination'}
+                        activeClassName={'activePagination'}
+                        />
                     </div>
                 </div>
                 <Modal isOpen={this.state.modalEditar}>
-                    <ModalHeader className="modal-header">
+                    <div className="modal-header">
                         <h5 className="modal-title fs-2" id="exampleModalLabel">Editar usuario</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" onClick={() => this.modalEditar()}>x</span>
-                        </button>
-                    </ModalHeader>
+                    </div>
                     <ModalBody>
                         <form id="formEditar">
                             <div className="modal-body">
@@ -194,12 +190,10 @@ class TablaUsuarios extends Component {
                                     </select>
                                 </div>
                             </div>
-                            <ModalFooter>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => this.modalEditar()}>Cancelar</button>
-                                    <button type="button" id="btnEditar" className="btn btn-primary" onClick={() => this.peticionPut(this.state.usuario.id, this.state.usuario)}>Actualizar</button>
-                                </div>
-                            </ModalFooter>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => this.modalEditar()}>Cancelar</button>
+                                <button type="button" id="btnEditar" className="btn btn-primary" onClick={() => this.peticionPut(this.state.usuario.id, this.state.usuario)}>Actualizar</button>
+                            </div>
                         </form>
                     </ModalBody>
                 </Modal>
@@ -207,5 +201,4 @@ class TablaUsuarios extends Component {
         );
     }
 };
-
 export default TablaUsuarios;

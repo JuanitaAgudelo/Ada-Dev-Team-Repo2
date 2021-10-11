@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import barrasmenu from "./img/bars-solid.svg";
 import usuario from "./img/user-regular.svg";
 import logo from "./img/índice.jpg";
+import './Headerstyle.css';
 function HeaderComponent() {
     return (
         <header>
