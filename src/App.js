@@ -8,27 +8,27 @@ import InformeVentas from "./InformeVentas/InformeVentas";
 import ProductosPage from './productos/ProductosPage';
 import ListadoProductosPage from './productos/ListadoProductosPage';
 import Ventas from './Ventas/Ventas';
+import Home from './Home/home';
 
 function App() {
   return (
     <Router>
       <HeaderComponent/>
       <Switch>
-        <Route path="/" exact>
-          <h1>PAGINA PRINCIPAL</h1>
+      <Route path="/home" exact>
+          <Home/>
         </Route>
         <Route path="/InformeVentas" exact>
-          <InformeVentas></InformeVentas>
+          <InformeVentas/>
         </Route>
         <Route path="/Ventas" exact>
-          <Link to="/InformeVentas" className="btn btn-primary">Consultar Ventas</Link>
-          <Ventas></Ventas>
+          <Ventas/>
         </Route>
         <Route path="/Productos" exact>          
-          <ProductosPage></ProductosPage>
+          <ProductosPage/>
         </Route>
         <Route path="/ListadoProductos" exact>          
-          <ListadoProductosPage></ListadoProductosPage>
+          <ListadoProductosPage/>
         </Route>
         <Route path="/Usuarios" exact>
           <BarraBusqueda/>
