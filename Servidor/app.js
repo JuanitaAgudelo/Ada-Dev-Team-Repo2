@@ -2,7 +2,12 @@ const express = require('express');
 const app = express();
 const port = 3001;//Se pone este valor en lugar de 3000 porque React ya está corriendo en este puerto y deben de ser diferentes
 //configura el servidor para recibir datos en formato json
+const cors = require('cors');
+
+
+//middlewere
 app.use(express.json());
+app.use(cors());
 
 // get the client
 const mysql = require('mysql2/promise');
@@ -20,7 +25,7 @@ let connection;
 app.get("/get-product", async (req, res) =>{  
     const[rows, fields] = await connection.execute("SELECT * FROM PRODUCTOS");
     console.log(rows);    
-    res.json(rows);    
+    res.json({'data': rows});    
 });
 
 app.post("/add-product", async (req, res) =>{
@@ -245,7 +250,7 @@ app.listen(port, async () => {
     connection = await mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: '12345678',
+        password: 'Mauricio87080751263',
         database: 'adasoft',
         Promise: bluebird
     });   

@@ -50,3 +50,7 @@ i{
 th, td{
     text-align: center;
 }
+
+td{
+    font-size: 13px !important;
+}

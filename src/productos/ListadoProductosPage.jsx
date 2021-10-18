@@ -1,10 +1,81 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import './productosStyles.css';
 import Editar from "./img/edit-regular.svg";
-import HeaderComponent from '../shared/components/header/HeaderComponent';
-import FooterComponent from '../shared/components/footer/FooterComponent';
+import Eliminar from "./img/trash-alt-regular.svg";
 
-function ListadoProductosPage(){
+function ListadoProductosPage() {
+
+    const state = {
+        perPage: 5,
+        page: 0,
+        pages: 0,
+        modalEditar: false
+    }
+
+    const [product, setProduct] = useState({
+        nombre: '',
+        descripcion: '',
+        valorUnitario: 0,
+        estado: '' 
+    })
+
+    const [products, setProducts] = useState([])
+
+    const [listUpdated, setListUpdated] = useState(false)
+
+    let{nombre, descripcion, valorUnitario, estado} = product
+
+    const handleDelete = id => {
+    const requestInit = {
+        method: 'DELETE'
+    }
+    fetch('http://localhost:9000/api/' + id, requestInit)
+    .then(res => res.text())
+    .then(res => console.log(res))
+
+    setListUpdated(true)
+    const mensaje = 'Se ha eliminado el producto con id: '+id
+    alert(mensaje)
+    }
+
+    const handleUpdate = id => {
+        valorUnitario = parseInt(valorUnitario, 10)
+        //validación de los datos
+        if (nombre === '' ||  descripcion === '' || valorUnitario <= 0 ||  estado === '' ) {
+            alert('Todos los campos son obligatorios')
+            return
+        }
+        const requestInit = {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(product)
+        }
+        fetch('http://localhost:9000/api/' + id, requestInit)
+        .then(res => res.text())
+        .then(res => console.log(res))
+
+        //reiniciando state de producto
+        setProduct({
+            nombre: '',
+            descripcion: '',
+            valorUnitario: 0,
+            estado: '' 
+        })
+
+        setListUpdated(true)
+    }     
+
+    useEffect(() => {
+    const getProducts = () => {
+        fetch('http://localhost:9000/api')
+        .then(res => res.json())
+        .then(res => setProducts(res))
+    }
+    getProducts()
+    setListUpdated(false)
+    }, [listUpdated])
+    
+    
     return(
         <Fragment>
         <div className="title">
@@ -49,56 +120,24 @@ function ListadoProductosPage(){
                         <th scope="col">Accion</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>               
-                        <td>1</td>
-                        <td>Producto A</td>
-                        <td>Producto para ... cuyos ingredientes ...</td>
-                        <td>1500</td>
-                        <td>Disponible</td>
+                    <tbody>                     
+                    {products.map(product => (
+                    <tr key={product.id}>
+                        <td>{product.id}</td>
+                        <td>{product.nombre}</td>
+                        <td>{product.descripcion}</td>
+                        <td>{product.valorUnitario}</td>
+                        <td>{product.estado}</td>
                         <td>
-                            <button className="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
-                                <i className="far fa-edit"></i>
-                            </button>
-                        </td>                
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Producto B</td>
-                            <td>Producto para ... cuyos ingredientes ...</td>
-                            <td>2500</td>
-                            <td>Disponible</td>
-                        <td>
-                            <button className="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
-                                <i className="far fa-edit"></i>
-                            </button>
-                        </td>                   
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Producto C</td>
-                            <td>Producto para ... cuyos ingredientes ...</td>
-                            <td>5500</td>
-                            <td>No Disponible</td>
-
-                            <td>
-                                <button className="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
-                                    <i className="far fa-edit"></i>
-                                </button>
-                            </td> 
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Producto D</td>
-                            <td>Producto para ... cuyos ingredientes ...</td>
-                            <td>800</td>
-                            <td>Disponible</td>
-                            <td>
-                                <button className="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#editProduct">
-                                    <i className="far fa-edit"></i>
-                                </button>                                
-                            </td> 
-                        </tr>
+                            <div className="d-grid gap-2 d-md-block"> 
+                                <button onClick={() => handleDelete(product.id)} className="btn btn-danger mx-2 py-1 btn-table"><img src={Eliminar} className="img-small-table"></img></button>
+                            
+                                <button onClick={() => handleUpdate(product.id)} className="btn btn-warning mx-2 py-1 btn-table" data-bs-toggle="modal" data-bs-target="#editProduct"><img src={Editar} className="img-small-table"></img></button>
+                                                                
+                            </div>
+                        </td>
+                    </tr>
+                ))}
                     </tbody>          
                     </table>
                 </div>
@@ -119,11 +158,11 @@ function ListadoProductosPage(){
                 </div>
                 <div className="modal-body">
                 <div>
-                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Id Producto" disabled/>
-                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Nombre"/>
-                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Descripción"/>
-                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Valor Unitario"/>
-                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Estado"/>
+                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Id Producto" id="mId" />
+                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Nombre" id="mNombre"/>
+                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Descripción" id="mDescripcion"/>
+                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Valor Unitario" id="mValorUnitario"/>
+                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Estado" id="mEstado"/>
                     </div>
                 </div>
                 <div className="modal-footer">
