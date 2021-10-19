@@ -1,59 +1,52 @@
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const port = 3001;
-const mysql      = require('mysql2/promise');
+const mysql  = require('mysql2/promise');
 const bluebird = require('bluebird');
+let connection;
 const db = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'ogioji;esddebgy',
-    database: 'adasoft',
+        // host: 'localhost',
+        // user: 'root',
+        // password: 'ogioji;esddebgy',
+        // database: 'adasoft',
+    host: '64.37.48.8',
+    user: 'systempl_adaroot',
+    password: 'adasoft2021',
+    database: 'systempl_adasoft',
 })
-
-let connection ;
-
-app.use(cors());
 
 //configura el servidor para recibir datos en formato json
 app.use(express.json());
 
-app.get("/get-products", async (request, response) => {
-    const [rows, fields] = await connection.execute("SELECT * FROM products");
-    response.json(rows);
-})
+app.use(cors());
+app.set('port',process.env.PORT || port)
 
-app.post("/add-product",(req,res)=>{
+app.post("/add-user",(req,res)=>{
     const correo = req.body.email
     const nombre = req.body.name
-    const sqlInsert = "INSERT INTO Usuarios (correo,estado,description) VALUES ('"+correo+"','pendiente','"+nombre+"')";
+    const sqlInsert = "INSERT INTO usuarios (correo,estado) VALUES ('"+correo+"','pendiente')";
+    // const sqlInsert = `INSERT INTO Usuarios (correo,estado) VALUES (${correo},'pendiente')`;
     db.query(sqlInsert, [correo], (err,result)=>{
-        console.log(result);
+    console.log(result);
     });
 });
+          // app.listen(port, async () =>{
+            // connection = await mysql.createConnection({
+            // host: 'localhost',
+            // user: 'root',
+            // password: 'ogioji;esddebgy',
+            // database: 'adasoft',
 
-app.put("/update-product", (req,resp) =>{
-    const product = req.body;
-    console.log(product.name)
-    resp.json(product)
-})
-
-app.delete("/delete-product", (req,resp) =>{
-    const product = req.body;
-    console.log(product.name)
-    resp.json(product)
-})
-
-app.listen(port, async () =>{
+app.listen(app.get('port'), async () =>{
     connection = await mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'ogioji;esddebgy',
-        database: 'adasoft',
+        host: '64.37.48.8',
+        user: 'systempl_adaroot',
+        password: 'adasoft2021',
+        database: 'systempl_adasoft',
         Promise: bluebird
-    });
+     });
 
     console.log("servidor ejecutando en puerto: "+ port);
 });
