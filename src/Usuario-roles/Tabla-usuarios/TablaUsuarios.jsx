@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect } from "react";
 import Editar from "./img/edit-regular.svg";
 import Buscar from "./img/search-solid.svg";
 import Axios from "axios";
+import api from "../../shared/Utils";
 import ReactPaginate from 'react-paginate';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import './TablaUsuariosStyle.css';
@@ -23,7 +24,7 @@ class TablaUsuarios extends Component {
     }
 
     peticionGet = () => {
-        Axios.get('http://localhost:3001/Usuarios').then(response => {
+        Axios.get(`${apiBaseUrl}/Usuarios`).then(response => {
             const {perPage}=this.state;
             this.setState({
                 usuarios: response.data,
@@ -35,14 +36,14 @@ class TablaUsuarios extends Component {
         });
     }
     peticionGetusuario = () => {
-        Axios.get('http://localhost:3001/Informacion-usuario/' + this.state.usuario.id).then(response => {
+        Axios.get(`${apiBaseUrl}/Informacion-usuario/` + this.state.usuario.id).then(response => {
             this.setState({
                 usuarios: response.data
             });
         });
     }
     peticionPut = (id, usuario) => {
-        Axios.put('http://localhost:3001/Actualizar-usuario/' + id, usuario).then(response => {
+        Axios.put(`${apiBaseUrl}/Actualizar-usuario/` + id, usuario).then(response => {
             this.modalEditar();
             this.peticionGet();
         })
