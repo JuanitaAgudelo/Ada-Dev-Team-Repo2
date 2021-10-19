@@ -1,69 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import Axios from 'axios'; 
+import Axios from 'axios';
 import './css/styles.css';
-import logogmail from "./media/img/gmail.png"
+import logogmail from "./img/gmail.png";
+import logoAda from "./img/logo.jpeg"
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Login() {
-    const [name,setName] = useState('')
-    const [email,setEmail] = useState('')
-    const submitEmail = ()=> {
-        Axios.post ("http://localhost:3001/add-product",{name:name, email: email})
-    }
 
+    const submitEmail = () => {
+        try {
+            Axios.post("http://localhost:3001/add-user", { name: user.name, email: user.email })
+        }
+        catch (error) {
+            console.error("Usuario ya existe");
+        }
+    }
+    const { loginWithRedirect } = useAuth0();
+    const { logout } = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
     return (
-        <div className="Login">
+        <div className="Login" pb-5>
             <div className="container w-100 bg-primary mt-4 mb-4 rounded shadow" >
                 <div className="row align-items-center align-items-stretch">
                     <div className="col d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded bg">
-
                     </div>
-
                     <div className="col bg-white pb-5 col-lg-7 col-xl-6 rounded-end">
                         <div className="text-end mt-3 mb-4">
-                            <img src="./media/img/logo.jpeg" alt="" className="pt-1 anchoimagen" />
+                            <img src={logoAda} alt="" className="pt-1 anchoimagen" />
                         </div>
-                        <h2 className="fw-bold text-center pt-5 mb-5">Bienvenido</h2>
+                        {isAuthenticated ? <h2 className="fw-bold text-center pt-5 mb-5">Hola {user.name}</h2> : <h2 className="fw-bold text-center pt-5 mb-5">Bienvenido</h2>}
                         <div className="w-75 my-4 ms-5 d-grid">
-                            <button className="btn btn-primary mb-4" type="button">
-                                        <img src={logogmail} width="30px" alt="" className="me-4" />
+                            {isAuthenticated ?
+                                submitEmail()
+                                : ""
+                            }
+
+                            {isAuthenticated ?
+                                <div>
+                                    <button className="btn btn-primary mb-4 btn-ingresar" onClick={() => "home"}>Ingresa a Adasoft</button>
+
+                                    <button className="btn btn-light btn-outline-dark border-primary mt-5 btn-ancho" onClick={() => logout({ returnTo: window.location.origin })}>Cierra Sesión</button>
+                                </div>
+                                : <div>
+                                    <button onClick={() => loginWithRedirect()} className="btn btn-primary mb-4 btn-ancho" type="button"><img src={logogmail} width="30px" alt="" className="me-4" />
                                         Inicia Sesión
-                            </button>
-                            <button type="button" className="btn btn-light btn-outline-dark border-primary mt-5" data-bs-toggle="modal" data-bs-target="#modalCRUD2">Regístrate</button>
+                                    </button>
+                                    <div className="pt-5 mt-5"></div>
+                                </div>}
                         </div>
-                        <div className="pt-5 mt-5">
-
+                        <div className="text-center mt-3 mb-4">
+                            <img src={logoAda} alt="" className="pt-1 anchoimagen" />
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div className="modal fade" id="modalCRUD2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header fondo-header">
-                            <h5 className="modal-title fs-2 letra-header" id="exampleModalLabel" >Registrar usuario</h5>
-                        </div>
-                        <form id="formEditar">
-                            <div className="modal-body">
-                                <div className ="form-group">
-                                    <label for="Name" className ="col-form-label label-color">Nombre: </label>
-                                    <input type ="text" className ="form-control border-dark" id="Name" placeholder="Nombre" onChange={(e)=>{setName(e.target.value)}}/>
-                                </div>
-                                <div className ="form-group">
-                                    <label for="Correo" className ="col-form-label label-color">Correo: </label>
-                                    <input type ="text" className ="form-control border-dark" id="Correo" placeholder="Correo" onChange={(e)=>{setEmail(e.target.value)}}/>
-                                </div>
-                            </div>
-                            <div className ="modal-footer">
-                            <button className ="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type ="submit" id="btnEnviar" className ="btn btn-primary botonenviar" onClick={submitEmail}>Enviar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
         </div>
     )
 }

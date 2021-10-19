@@ -18,12 +18,12 @@
  
  body{
     background: #C5CAE9;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #757575, #C5CAE9);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #757575, #C5CAE9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
- 
+    background: -webkit-linear-gradient(to right, #e9e5e5, #C5CAE9);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f7f8fa, #9aa7f8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
  }
  .bg{
-    background-image: url(../media/img/team.jpg);
+    background-image: url(../img/team.jpg);
     background-position: center center;
  }
  .button:hover {
@@ -33,4 +33,16 @@
 
  .anchoimagen {
    width:150px;
+ }
+
+ .btn-ingresar{
+    width: 400px;
+    font-weight: bold;
+ }
+ .btn-ancho{
+    width: 400px;
+ }
+
+ .Login {
+    width: 100%;
  }
