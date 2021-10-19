@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from "react";
 import Editar from "./img/edit-regular.svg";
 import Buscar from "./img/search-solid.svg";
 import Axios from "axios";
-import api from "../../shared/Utils";
+import apiBaseUrl from "../../shared/Utils/Api";
 import ReactPaginate from 'react-paginate';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import './TablaUsuariosStyle.css';
