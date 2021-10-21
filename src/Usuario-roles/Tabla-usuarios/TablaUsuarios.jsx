@@ -24,7 +24,7 @@ class TablaUsuarios extends Component {
     }
 
     peticionGet = () => {
-        Axios.get(`${apiBaseUrl}/Usuarios`).then(response => {
+        Axios.get(`${apiBaseUrl}/get-usuario`).then(response => {
             const {perPage}=this.state;
             this.setState({
                 usuarios: response.data,
@@ -36,14 +36,14 @@ class TablaUsuarios extends Component {
         });
     }
     peticionGetusuario = () => {
-        Axios.get(`${apiBaseUrl}/Informacion-usuario/` + this.state.usuario.id).then(response => {
+        Axios.get(`${apiBaseUrl}/get-informacion-usuario/` + this.state.usuario.id).then(response => {
             this.setState({
                 usuarios: response.data
             });
         });
     }
     peticionPut = (id, usuario) => {
-        Axios.put(`${apiBaseUrl}/Actualizar-usuario/` + id, usuario).then(response => {
+        Axios.put(`${apiBaseUrl}/update-usuario/` + id, usuario).then(response => {
             this.modalEditar();
             this.peticionGet();
         })
