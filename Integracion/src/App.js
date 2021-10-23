@@ -4,7 +4,6 @@ import Login from './login/login';
 import TablaUsuarios from './Usuario-roles/Tabla-usuarios/TablaUsuarios';
 import HeaderComponent from './shared/components/header/HeaderComponent';
 import FooterComponent from './shared/components/footer/FooterComponent';
-import './App.css';
 import Home from './Home/Home';
 import Ventas from './Ventas/Ventas';
 import InformeVentas from './InformeVentas/InformeVentas';

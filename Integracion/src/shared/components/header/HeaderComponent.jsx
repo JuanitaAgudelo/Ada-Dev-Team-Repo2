@@ -4,7 +4,10 @@ import barrasmenu from "./img/bars-solid.svg";
 import usuario from "./img/user-regular.svg";
 import logo from "./img/índice.jpg";
 import './Headerstyle.css';
+import { useAuth0 } from "@auth0/auth0-react";
 function HeaderComponent() {
+    const { logout } = useAuth0();
+    const {user, isAuthenticated} = useAuth0();
     return (
         <header>
             <nav className="navbar navbar-expand-xl bg-primarycolor">
@@ -35,11 +38,13 @@ function HeaderComponent() {
                             <img src={usuario} className="img-small" alt="Usuario"/>
                         </a>
                         <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a className="dropdown-item" href="#">user</a></li>
+                            <li><a className="dropdown-item">{isAuthenticated ? user.name : "User"}</a></li>
                             <li>
                                 <hr className="dropdown-divider" />
                             </li>
-                            <li><a className="dropdown-item" href="#">Cerrar sesión</a></li>
+                            <li>
+                                {isAuthenticated ? <a className="dropdown-item" href="#" onClick={() => logout({ returnTo: window.location.origin })}>Cerrar sesión</a> : null}
+                            </li>
                         </ul>
                     </div>
                 </div>
