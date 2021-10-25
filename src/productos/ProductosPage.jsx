@@ -58,11 +58,15 @@ function ProductosPage(){
                             <div className="input-group mb-3"> 
                                 <label htmlFor="valorUnitario" className="form-label">Valor Unitario</label>           
                                 <input type="number" id = "valorUnitario" className="form-control" name = "valorUnitario" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  onChange={(e) => setValorUnitario(e.target.value)} />
+                            </div>                   
+                            <div  className="input-group mb-3 formulario">
+                                <label htmlFor="estado2" className="form-label">Estado</label> 
+                                <select className="form-select" name="estado" id="estado" onChange={(e) => setEstado(e.target.value)}>
+                                            <option selected>Selecciona un Estado...</option>
+                                            <option name="estado" value="Disponible">Disponible</option>
+                                            <option name="estado" value="No Disponible">No Disponible</option>
+                                </select>
                             </div>                        
-                            <div className="input-group mb-3 formulario">
-                                <label htmlFor="estado" className="form-label">Estado</label>            
-                                <input type="text" id = "estado" className="form-control" name = "estado" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"   onChange={(e) => setEstado(e.target.value)}/>
-                            </div>                         
                             <div className="d-grid gap-2 d-md-block"> 
 
                                 <button type="submit" className="btn btn-primary mx-2" onClick={addProduct}>Registrar</button>                      

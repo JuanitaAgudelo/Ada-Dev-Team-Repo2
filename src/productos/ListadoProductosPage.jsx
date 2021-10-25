@@ -13,10 +13,11 @@ class ListadoProductos extends Component {
         
         productos: [],
         tablaProductos: [],
-        perPage: 3,
+        perPage: 5,
         page: 0,
         pages: 0,
         modalEditar: false,
+        modalEliminar: false,
         busqueda:"",
         producto: {
             id: 0,
@@ -49,13 +50,17 @@ class ListadoProductos extends Component {
         })
     }
 
-    peticionDelete =(id) =>{
-        Axios.delete(`http://localhost:3001/delete-product/` +id).then(response => {
+    peticionDelete = (id) =>{        
+            Axios.delete(`http://localhost:3001/delete-product/` +id).then(response => { 
+            this.modalEliminar();           
             this.peticionGet();
         })
     }
     modalEditar = () => {
         this.setState({ modalEditar: !this.state.modalEditar });
+    }
+    modalEliminar = () => {
+        this.setState({ modalEliminar: !this.state.modalEliminar });
     }
 
     
@@ -151,7 +156,7 @@ class ListadoProductos extends Component {
                                                         <button type="button" className="btn btn-warning btn-table" data-bs-toggle="modal"
                                                             data-bs-target="#modalCRU" onClick={() => { this.seleccionarProducto(producto); this.modalEditar() }}><img src={Editar} className="img-small-table"
                                                                 alt="Busqueda" /></button>
-                                                        <button onClick={() => {this.peticionDelete(this.state.producto.id)}} className="btn btn-danger mx-2 py-1 btn-table"><img src={Eliminar} className="img-small-table"></img></button>
+                                                        <button onClick={() => {this.seleccionarProducto(producto); this.modalEliminar()}} className="btn btn-danger mx-2 py-1 btn-table"><img src={Eliminar} className="img-small-table"></img></button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -209,6 +214,42 @@ class ListadoProductos extends Component {
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => this.modalEditar()}>Cancelar</button>
                                 <button type="button" id="btnEditar" className="btn btn-primary" onClick={() => this.peticionPut(this.state.producto.id, this.state.producto)}>Actualizar</button>
+                            </div>
+                        </form>
+                    </ModalBody>
+                </Modal>
+                <Modal isOpen={this.state.modalEliminar}>
+                    <div className="modal-header">
+                        <h5 className="modal-title fs-2" id="exampleModalLabel">Eliminar producto</h5>                                               
+                    </div>
+                    <ModalBody>
+                        <form id="formElimar">
+                            <div className="modal-body">
+                                <div><h6>¿Desea eliminar este producto?</h6></div>  
+                                <div className="form-group">
+                                    <label for="ID" className="col-form-label">ID: </label>
+                                    <input type="text" className="form-control border-dark" name="id" id="id" value={this.state.producto.id} readOnly />
+                                </div>
+                                <div className="form-group">
+                                    <label for="nombre" className="col-form-label">Nombre: </label>
+                                    <input type="text" className="form-control border-dark" name="nombre" id="nombre" value={this.state.producto.nombre} readOnly />
+                                </div>
+                                <div className="form-group">
+                                    <label for="descripcion" className="col-form-label">Descripción: </label>
+                                    <input type="text" className="form-control border-dark" name="descripcion" id="descripcion" value={this.state.producto.descripcion} readOnly />
+                                </div>
+                                <div className="form-group">
+                                    <label for="valorUnitario" className="col-form-label">Valor Unitario: </label>
+                                    <input type="number" className="form-control border-dark" name="valorUnitario" id="valorUnitario" value={this.state.producto.valorUnitario} readOnly />
+                                </div> 
+                                <div className="form-group">
+                                    <label for="estado" className="col-form-label">Estado: </label>
+                                    <input type="text" className="form-control border-dark" name="estado" id="estado" value={this.state.producto.estado} readOnly />
+                                </div>                           
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => this.modalEliminar()}>Cancelar</button> 
+                                <button type="button" id="btnEliminar" className="btn btn-primary" onClick={() => this.peticionDelete(this.state.producto.id)}>Eliminar</button>
                             </div>
                         </form>
                     </ModalBody>
