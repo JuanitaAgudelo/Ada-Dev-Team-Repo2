@@ -4,10 +4,24 @@ import cheque from "./img/cheque.png";
 import "./VentasStyles.css";
 import axios from 'axios';
 import apiBaseUrl from "../shared/Utils/Api";
-
+import { useParams } from 'react-router-dom';
 
 
 function Ventas() {
+
+    const {correo}=useParams()
+
+    const[rol, setRol]=useState({ usuario: [] });
+
+    const getRol=()=>{
+        axios.get(`${apiBaseUrl}/get-informacion-usuario/${correo}`).then((response)=>{
+            setRol(response.data[0])  
+        }
+    );}
+    useEffect(() => {
+        getRol();
+    }, []);
+    console.log(rol.rol)
 
     const[precioUnitario, setPrecioUnitario]=useState('')
     const[cantidad, setCantidad]=useState('')
@@ -20,6 +34,7 @@ function Ventas() {
     const[Productos_id, setProductos_id]=useState('')
 
     const addVenta = () => {
+        
         axios.post(`${apiBaseUrl}/add-venta`,
             {
                 precioUnitario: precioUnitario,
@@ -35,7 +50,10 @@ function Ventas() {
         );
         //const jsonResponse = await response.json();
         
+        
     };
+
+
     return (
         <Fragment>
             <div class="title">
@@ -96,7 +114,7 @@ function Ventas() {
 
                             <div className="d-grid gap-2 d-md-block">
                             <a href="#" class="cta"><button class="btn btn-success" type="submit" onClick={addVenta}>Registrar</button></a>
-                                <button className="btn btn-info mx-2" type="button"><NavLink to="/InformeVentas" >Consultar ventas</NavLink></button>
+                                <button className="btn btn-info mx-2" type="button"><NavLink to={`/Ventas/${correo}`} >Consultar ventas</NavLink></button>
                             </div>
                         </div>
                     </div>

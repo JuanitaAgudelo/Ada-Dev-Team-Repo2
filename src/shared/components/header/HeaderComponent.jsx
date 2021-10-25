@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useState, useEffect, Route } from 'react';
 import { NavLink } from 'react-router-dom';
 import barrasmenu from "./img/bars-solid.svg";
 import usuario from "./img/user-regular.svg";
 import logo from "./img/índice.jpg";
 import './Headerstyle.css';
+import { useParams } from 'react-router-dom';
+import apiBaseUrl from "../../Utils/Api";
+import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+
 function HeaderComponent() {
+
     const { logout } = useAuth0();
     const {user, isAuthenticated} = useAuth0();
+    
+    const[botonActivoUsuario, setBotonActivoUsuario]=useState(true);
+    const[botonActivoVentas, setBotonActivoVentas]=useState(true);
+    const[botonActivoProductos, setBotonActivoProductos]=useState(true);
+
+    const {correo}=useParams()
+
+    const[rol, setRol]=useState({ usuario: [] });
+
+    const getRol=()=>{
+        axios.get(`${apiBaseUrl}/get-informacion-usuario/${correo}`).then((response)=>{
+            setRol(response.data[0])  
+        }
+    );}
+    useEffect(() => {
+        getRol();
+    }, []);
+    console.log(rol.rol)
+
+    
+
     return (
         <header>
             <nav className="navbar navbar-expand-xl bg-primarycolor">
@@ -18,18 +44,28 @@ function HeaderComponent() {
                     </button>
                     <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul className="nav nav-navs">
-                            <li className="nav-item">
-                                <NavLink to="/Home" className="nav-link" aria-current="">Home</NavLink>
+                            <li className="nav-item" >
+                                <NavLink to={`/Home/${correo}`} className="nav-link" aria-current="" >Home</NavLink>
                             </li>
-                            <li className="nav-item">
-                                <NavLink to="/Ventas" className="nav-link" aria-current="">Ventas</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/Productos" className="nav-link" aria-current="">Productos</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/Usuarios" className="nav-link" aria-current="">Usuarios</NavLink>
-                            </li>
+                            {(rol.rol == "Administrador" || rol.rol == "Vendedor") && rol.estado=="Autorizado"? 
+                            <ul className="nav nav-navs">
+                                <li className="nav-item">
+                                    <NavLink to={`/Ventas/${correo}`} className="nav-link" aria-current="" disabled>Ventas</NavLink>
+                                </li>
+                            </ul>: ""    
+                            }
+                            {rol.rol == "Administrador" && rol.estado=="Autorizado"? 
+                            <ul className="nav nav-navs">
+                                <li className="nav-item">
+                                <NavLink to={`/Productos/${correo}`} className="nav-link" aria-current="">Productos</NavLink>
+                                </li>
+                    
+                                <li className="nav-item">
+                                <NavLink to={`/Usuarios/${correo}`} className="nav-link" aria-current="">Usuarios</NavLink>
+                                </li>
+                            </ul>: ""
+                            }
+                            
                         </ul>
                     </div>
                     <div id="dropdown-div" className="dropdown">

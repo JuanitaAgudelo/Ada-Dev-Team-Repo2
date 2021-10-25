@@ -35,13 +35,17 @@
    width:150px;
  }
 
- .btn-ingresar{
-    width: 400px;
-    font-weight: bold;
- }
- .btn-ancho{
-    width: 400px;
- }
+ .btn-login{
+   width: 90%;
+   font-weight: bold;
+   color: #FFFFFF;
+   background: #0D6EFD;
+}
+
+.btn-logout{
+   width: 90%;
+   color: gray !important;
+}
 
  .Login {
     width: 100%;

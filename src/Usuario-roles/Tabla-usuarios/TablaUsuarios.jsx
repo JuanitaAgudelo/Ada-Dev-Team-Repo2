@@ -108,6 +108,9 @@ class TablaUsuarios extends Component {
         return (
 
             <div className="container">
+                 <div className="title">
+                <h1>Usuarios y Roles</h1>
+                </div>
                 <div class="container-fluid">
                     <div class="mt-5"></div>
 

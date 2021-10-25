@@ -1,21 +1,24 @@
 import React, { Component, useState, useEffect } from "react";
 import Editar from "./img/edit-regular.svg";
 import Buscar from "./img/search-solid.svg";
+import eliminar from "./img/delete.png";
 import Axios from "axios";
 import apiBaseUrl from "../shared/Utils/Api";
 import ReactPaginate from 'react-paginate';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-
+import Eliminar from "./img/trash-alt-regular.svg";
 
 import './InformeVentasStyles.css';
+import { findAllByDisplayValue } from "@testing-library/dom";
 class InformeVentas extends Component {
     state = {
         ventas: [],
         tablaventas: [],
-        perPage: 10,
+        perPage: 4,
         page: 0,
         pages: 0,
         modalEditar: false,
+        modalEliminar: false,
         busqueda:"",
         venta: {
             id: null,
@@ -49,6 +52,13 @@ class InformeVentas extends Component {
             this.peticionGet();
         })
     }
+    peticionDelete = (id) => {
+        Axios.delete( `${apiBaseUrl}/delete-venta/` + id).then(response => {
+            this.setState({ modalEliminar: false });
+            this.peticionGet();
+        })
+    }
+
     modalEditar = () => {
         this.setState({ modalEditar: !this.state.modalEditar });
     }
@@ -65,10 +75,13 @@ class InformeVentas extends Component {
                 vendedor: ventaactual.vendedor,
                 Usuarios_id: ventaactual.Usuarios_id,
                 Productos_id: ventaactual.Productos_id
+
             }
         })
 
     }
+  
+   
     handleChange = async e => {
         e.persist();
         await this.setState({
@@ -101,11 +114,17 @@ class InformeVentas extends Component {
     componentDidMount() {
         this.peticionGet();
     }
+
     render() {
         const { page, perPage, pages, ventas } = this.state;
+
         return (
             
             <div className="container">
+                
+                <div className="title">
+                <h1>Informe Ventas</h1>
+                </div>
                 <div class="container-fluid">
                     <div class="mt-5"></div>
 
@@ -134,7 +153,6 @@ class InformeVentas extends Component {
                                         <th scope="col">Vendedor </th>
                                         <th scope="col">Usuario ID </th>
                                         <th scope="col">Producto ID </th>
-                                        <th scope="col">Acciones </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -145,7 +163,7 @@ class InformeVentas extends Component {
                                                 <td>{val.precioUnitario}</td>
                                                 <td>{val.cantidad}</td>
                                                 <td>{val.valorTotal}</td>
-                                                <td>{val.fecha}</td>
+                                                <td>{val.fecha.split("T")[0]}</td>
                                                 <td>{val.nombreCliente}</td>
                                                 <td>{val.documentoCliente}</td>
                                                 <td>{val.vendedor}</td>
@@ -153,9 +171,13 @@ class InformeVentas extends Component {
                                                 <td>{val.Productos_id}</td>
                                                 <td>
                                                     <div className="btn-group d-flex justify-content-center" role="group">
-                                                        <button type="button" className="btn btn-warning btn-table" data-bs-toggle="modal"
+                                                        <button type="button" className="btn btn-warning btn-table3" data-bs-toggle="modal"
                                                             data-bs-target="#modalCRU" onClick={() => { this.seleccionarVenta(val); this.modalEditar() }}><img src={Editar} className="img-small-table"
                                                                 alt="Busqueda" /></button>
+                                                    
+                                                        <button type="button" className="btn btn-danger btn-table3" data-bs-toggle="modal"
+                                                        onClick={()=>{this.seleccionarVenta(val); this.setState({modalEliminar: true})}}><img src={Eliminar} className="img-small-table"
+                                                            alt="Busqueda" /></button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -167,7 +189,7 @@ class InformeVentas extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-sm-12">
+                    <div className="col-sm-3">
                         <ReactPaginate
                         previousLabel={'<-'} 
                         nextLabel={'->'} 
@@ -234,6 +256,16 @@ class InformeVentas extends Component {
                             </div>
                         </form>
                     </ModalBody>
+                </Modal>
+
+                <Modal isOpen={this.state.modalEliminar}>
+                    <ModalBody>
+                        Estás seguro que deseas eliminar la venta {this.state.venta.id && this.state.venta.nombreCliente}
+                    </ModalBody>
+                    <ModalFooter>
+                        <button type="button" className="btn btn-danger" onClick={() => this.peticionDelete(this.state.venta.id)}>Sí</button>
+                        <button type="button" className="btn btn-secondary" onClick={() => this.setState({ modalEliminar: false })}>No</button>
+                    </ModalFooter>
                 </Modal>
             </div>
         );

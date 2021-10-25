@@ -1,21 +1,23 @@
-import React, { Fragment, useState, useParams, useEffect, Route } from 'react';
+import React, { Fragment, useState, useEffect, Route } from 'react';
 import { NavLink } from 'react-router-dom';
 import ventas from "./img/venta.jpg";
 import productos from "./img/productos.jpg";
 import roles from "./img/roles.jpg";
+import noAutorizado from "./img/noAutorizado.jpeg"
 import "./style.css"
 import axios from 'axios';
 import apiBaseUrl from "../shared/Utils/Api";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useParams } from 'react-router-dom';
 
 function Home(){
-    
-    const[botonActivoUsuario, setBotonActivoUsuario]=useState();
-    const[botonActivoVentas, setBotonActivoVentas]=useState();
-    const[botonActivoProductos, setBotonActivoProductos]=useState();
-    
+
+    const[botonActivoUsuario, setBotonActivoUsuario]=useState(true);
+    const[botonActivoVentas, setBotonActivoVentas]=useState(true);
+    const[botonActivoProductos, setBotonActivoProductos]=useState(true);
+
     const {correo}=useParams()
-    
+
     const[rol, setRol]=useState({ usuario: [] });
 
     const getRol=()=>{
@@ -26,57 +28,40 @@ function Home(){
     useEffect(() => {
         getRol();
     }, []);
-    
-    useEffect(() => {
-        if(rol.rol=="Vendedor"){
-            setBotonActivoUsuario(false)
-            setBotonActivoVentas(true)
-            setBotonActivoProductos(true)
-            alert(botonActivoProductos, botonActivoUsuario, botonActivoVentas)
-            console.log(botonActivoProductos, botonActivoUsuario, botonActivoVentas)
-            
-        }else if(rol.rol=="Administrador"){
-            
-            setBotonActivoUsuario(true)
-            setBotonActivoVentas(true)
-            setBotonActivoProductos(true)
-            alert(botonActivoProductos, botonActivoUsuario, botonActivoVentas)
-            console.log(botonActivoProductos, botonActivoUsuario, botonActivoVentas)
+    console.log(rol.rol)
 
-        }else if(rol.rol=="Pendiente"){
-            setBotonActivoUsuario(false)
-            setBotonActivoVentas(false)
-            setBotonActivoProductos(false)
-            alert(botonActivoProductos, botonActivoUsuario, botonActivoVentas)
-            console.log(botonActivoProductos, botonActivoUsuario, botonActivoVentas)
 
-        }
-    }, []);
-  
     return(
-        <Fragment>
-        <br/>
+    
+         <Fragment>
         <div className="containerC">
+        {(rol.rol == "Administrador" || rol.rol == "Vendedor") && rol.estado=="Autorizado"?
             <div className="card">
-                <img src={ventas} alt="Ventas"/>
+                <NavLink to={`/Ventas/${correo}`} ><img src={ventas} alt="Ventas"/></NavLink>
                 <h3>Ventas</h3>
-                <button className="btn btn-info mx-2" type="button" disabled={!botonActivoVentas} ><NavLink to="/Productos" >Productos</NavLink></button>
-            </div>
-
+            </div>: "" 
+        }
+        {rol.rol == "Administrador" && rol.estado=="Autorizado"? 
             <div className="card">
-                 <img src={productos} alt="Productos"/>
+                <NavLink to={`/Productos/${correo}`} ><img src={productos} alt="Productos"/></NavLink>
                 <h3>Productos</h3>
-                <button className="btn btn-info mx-2" type="button" disabled={!botonActivoProductos}><NavLink to="/Productos" >Productos</NavLink></button>
-            </div>
-
+            </div>: ""
+                            }
+        {rol.rol == "Administrador" && rol.estado=="Autorizado"? 
             <div className="card">
-                 <img src={roles} alt="Usuarios" disabled={true}/>
+                <NavLink to={`/Usuarios/${correo}`} ><img src={roles} alt="Usuarios"/></NavLink> 
                 <h3>Usuarios</h3> 
-                <button className="btn btn-info mx-2" type="button" disabled={!botonActivoUsuario}><NavLink to="/Productos" >Productos</NavLink></button> 
-            </div> 
+            </div> : ""
+        }
+        {rol.rol=="Pendiente" || rol.estado=="No Autorizado"?
+            <div className="card">
+                <img src={noAutorizado} alt="Usuarios"/>
+                <h3>Por favor espere a que el administrador autorice su ingreso</h3> 
+            </div> : ""
+        }
         </div>
-        <br/>
-        </Fragment>        
+       
+        </Fragment>   
     );
 }
 

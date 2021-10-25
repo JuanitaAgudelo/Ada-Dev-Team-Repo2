@@ -43,12 +43,12 @@ function Login() {
                             }
 
                             {isAuthenticated ?
-                                <div>
-                                    <NavLink className="btn btn-primary mb-4 btn-ingresar"  to="/Home" >Ingresar a AdaSoft</NavLink>
-                                    <button className="btn btn-light btn-outline-dark border-primary mt-5 btn-ancho" onClick={() => logout({ returnTo: window.location.origin })}>Cierra Sesión</button>
+                                <div className="text-center mt-3 mb-4">
+                                    <NavLink className="btn mb-4 btn-login"  to={`/Home/${user.email}`} >Ingresar a AdaSoft</NavLink>
+                                    <button className="btn btn-outline-dark border-primary mt-5 btn-logout" onClick={() => logout({ returnTo: window.location.origin })}>Cierra Sesión</button>
                                 </div>
-                                : <div>
-                                    <button onClick={() => loginWithRedirect()} className="btn btn-primary mb-4 btn-ancho" type="button"><img src={logogmail} width="30px" alt="" className="me-4" />
+                                : <div className="text-center mt-3 mb-4">
+                                    <button onClick={() => loginWithRedirect()} className="btn mb-4 btn-login" type="button"><img src={logogmail} width="30px" alt="" className="me-4" />
                                         Inicia Sesión
                                     </button>
                                     <div className="pt-5 mt-5"></div>
