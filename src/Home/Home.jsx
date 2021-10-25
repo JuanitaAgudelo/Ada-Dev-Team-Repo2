@@ -1,4 +1,4 @@
-import React, { Fragment, useState, Route } from 'react';
+import React, { Fragment, useState, useParams, useEffect, Route } from 'react';
 import { NavLink } from 'react-router-dom';
 import ventas from "./img/venta.jpg";
 import productos from "./img/productos.jpg";
