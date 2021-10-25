@@ -1,201 +1,220 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import './productosStyles.css';
+import React, { Component, useState, useEffect } from "react";
 import Editar from "./img/edit-regular.svg";
 import Eliminar from "./img/trash-alt-regular.svg";
+//import Buscar from "./img/search-solid.svg";
+import Axios from "axios";
+import ReactPaginate from "react-paginate";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import './ListadoProductosStyle.css';
+import apiBaseUrl from "../shared/Utils/Api";
 
-function ListadoProductosPage() {
-
-    const state = {
-        perPage: 5,
+class ListadoProductos extends Component {
+    state = {
+        
+        productos: [],
+        tablaProductos: [],
+        perPage: 3,
         page: 0,
         pages: 0,
-        modalEditar: false
-    }
-
-    const [product, setProduct] = useState({
-        nombre: '',
-        descripcion: '',
-        valorUnitario: 0,
-        estado: '' 
-    })
-
-    const [products, setProducts] = useState([])
-
-    const [listUpdated, setListUpdated] = useState(false)
-
-    let{nombre, descripcion, valorUnitario, estado} = product
-
-    const handleDelete = id => {
-    const requestInit = {
-        method: 'DELETE'
-    }
-    fetch('http://localhost:9000/api/' + id, requestInit)
-    .then(res => res.text())
-    .then(res => console.log(res))
-
-    setListUpdated(true)
-    const mensaje = 'Se ha eliminado el producto con id: '+id
-    alert(mensaje)
-    }
-
-    const handleUpdate = id => {
-        valorUnitario = parseInt(valorUnitario, 10)
-        //validación de los datos
-        if (nombre === '' ||  descripcion === '' || valorUnitario <= 0 ||  estado === '' ) {
-            alert('Todos los campos son obligatorios')
-            return
-        }
-        const requestInit = {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(product)
-        }
-        fetch('http://localhost:9000/api/' + id, requestInit)
-        .then(res => res.text())
-        .then(res => console.log(res))
-
-        //reiniciando state de producto
-        setProduct({
-            nombre: '',
-            descripcion: '',
+        modalEditar: false,
+        busqueda:"",
+        producto: {
+            id: 0,
+            nombre: " ",
+            descripcion: " ",
             valorUnitario: 0,
-            estado: '' 
-        })
-
-        setListUpdated(true)
-    }     
-
-    useEffect(() => {
-    const getProducts = () => {
-        fetch('http://localhost:9000/api')
-        .then(res => res.json())
-        .then(res => setProducts(res))
+            estado: " "
+        }      
     }
-    getProducts()
-    setListUpdated(false)
-    }, [listUpdated])
+
     
+
+    peticionGet = () => {
+        Axios.get(`http://localhost:3001/get-products`).then(response => {
+            const {perPage}=this.state;
+            this.setState({
+                productos: response.data,
+                tablaProductos: response.data,
+            });
+            this.setState({
+                pages: Math.ceil(this.state.productos.length / perPage)
+            })
+        });
+    }
+
+    peticionPut = (id, producto) => {
+        Axios.put(`http://localhost:3001/update-product/` + id, producto).then(response => {
+            this.modalEditar();
+            this.peticionGet();
+        })
+    }
+
+    peticionDelete =(id) =>{
+        Axios.delete(`http://localhost:3001/delete-product/` +id).then(response => {
+            this.peticionGet();
+        })
+    }
+    modalEditar = () => {
+        this.setState({ modalEditar: !this.state.modalEditar });
+    }
+
     
-    return(
-        <Fragment>
-        <div className="title">
-            <h1>Listado Productos</h1>
-        </div> 
-        <div className="container">
-            <div className="row">
-                <div className="column-4">                  
+    seleccionarProducto = (productoActual) => {
+        this.setState({
+            producto: {
+                id: productoActual.id,
+                nombre: productoActual.nombre,
+                descripcion: productoActual.descripcion,
+                valorUnitario: productoActual.valorUnitario,
+                estado: productoActual.estado
+            }
+        })
+        //console.log(this.state.usuario.rol);
+    }
+    handleChange = async e => {
+        e.persist();
+        await this.setState({
+            producto: {
+                ...this.state.producto,
+                [e.target.name]: e.target.value
+            }
+        });
+        console.log(this.state.producto);
+    }
+    handlefilterChange=e=>{
+        this.setState({
+            busqueda: e.target.value
+        });
+        this.filtrar(e.target.value);
+    }
+    filtrar=(terminoBusqueda)=>{
+        let resultadoBusqueda=this.state.tablaProductos.filter((elemento)=>{
+            if(elemento.id.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) || elemento.nombre.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) || elemento.descripcion.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) || elemento.estado.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())){
+                return elemento;
+            }
+        });
+        this.setState({
+            tablaProductos: resultadoBusqueda
+        });
+    }
+    handlePageClick = (e) => {
+        let page = e.selected;
+        this.setState({page})
+    }
+    componentDidMount() {
+        this.peticionGet();
+    }
+    render() {        
+        const { page, perPage, pages, tablaProductos } = this.state;
+        return (
+            <div className="container">
+                <div className="title">
+                <h1>Listado Productos</h1>
                 </div>
-                <div className="column-4"> 
-                    <div className="formVendedores">                   
-                        <div className=" column-4 input-group mb-3 formulario">            
-                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Id Producto"/>
-                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Nombre"/>
-                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Descripcion"/>
-                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Estado"/>
-                            <div className="d-grid gap-2 d-md-block">                        
-                                <button className="btn btn-info" type="button">Filtrar</button>
-                            </div>
+                <div class="container-fluid">
+                    <div class="mt-5"></div>
+
+                    <div class="row">
+                        <div class="col">
+                            <form class="d-flex">
+                                <input class="form-control me-2" type="search" placeholder="Buscar producto" aria-label="Search" value={this.state.busqueda} onChange={this.handlefilterChange}/>
+                            </form>
                         </div>
-                    </div>                       
-                </div>                                                      
-                <div className="column-4">                    
-                </div>
-            </div>
-        </div>
-
-        {/* <!-- Table Productos --> */}
-        <div className="container">
-            <div className="row-12">
-                <div className="column-4">                    
-                </div>
-                <div className="column-4"> 
-                    <table className="table table-striped">       
-                    <thead>
-                        <tr>
-                        <th scope="col">idProducto</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Descripcion</th>
-                        <th scope="col">Valor Unitario</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Accion</th>
-                        </tr>
-                    </thead>
-                    <tbody>                     
-                    {products.map(product => (
-                    <tr key={product.id}>
-                        <td>{product.id}</td>
-                        <td>{product.nombre}</td>
-                        <td>{product.descripcion}</td>
-                        <td>{product.valorUnitario}</td>
-                        <td>{product.estado}</td>
-                        <td>
-                            <div className="d-grid gap-2 d-md-block"> 
-                                <button onClick={() => handleDelete(product.id)} className="btn btn-danger mx-2 py-1 btn-table"><img src={Eliminar} className="img-small-table"></img></button>
-                            
-                                <button onClick={() => handleUpdate(product.id)} className="btn btn-warning mx-2 py-1 btn-table" data-bs-toggle="modal" data-bs-target="#editProduct"><img src={Editar} className="img-small-table"></img></button>
-                                                                
-                            </div>
-                        </td>
-                    </tr>
-                ))}
-                    </tbody>          
-                    </table>
-                </div>
-                <div className="column-4">                    
-                </div>
-            </div>
-        </div> 
-        
-    {/* </div> */}
-
-        {/* <!-- Modal --> */}
-        <div className="modal" id='editProduct' tabindex="-1">
-            <div className="modal-dialog">
-            <div className="modal-content">
-                <div className="modal-header">
-                    <h5 className="modal-title">Editar Producto</h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div className="modal-body">
-                <div>
-                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Id Producto" id="mId" />
-                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Nombre" id="mNombre"/>
-                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Descripción" id="mDescripcion"/>
-                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Valor Unitario" id="mValorUnitario"/>
-                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Estado" id="mEstado"/>
                     </div>
                 </div>
-                <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" className="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#confirmEditProduct">Editar</button>
+                <div className="row">
+                    <div className="mt-5"></div>
+                    <div className="col-lg-12">
+                        <div className="table-responsive">
+                            <table id="TableProduct" className="table table-hover table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col">Valor Unitario</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {tablaProductos.slice(page*perPage, (page+1)*perPage).map((producto) => {
+                                        return (
+                                            <tr key={producto.id}>
+                                            <th scope="row">{producto.id}</th>
+                                                <td>{producto.nombre}</td>
+                                                <td>{producto.descripcion}</td>
+                                                <td>{producto.valorUnitario}</td>
+                                                <td>{producto.estado}</td>
+                                                <td>
+                                                    <div className="btn-group d-flex justify-content-center" role="group">
+                                                        <button type="button" className="btn btn-warning btn-table" data-bs-toggle="modal"
+                                                            data-bs-target="#modalCRU" onClick={() => { this.seleccionarProducto(producto); this.modalEditar() }}><img src={Editar} className="img-small-table"
+                                                                alt="Busqueda" /></button>
+                                                        <button onClick={() => {this.peticionDelete(this.state.producto.id)}} className="btn btn-danger mx-2 py-1 btn-table"><img src={Eliminar} className="img-small-table"></img></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
+                <div className="row">
+                    <div className="col-sm-3">
+                        <ReactPaginate
+                        previousLabel={'<-'} 
+                        nextLabel={'->'} 
+                        pageCount={pages}
+                        onPageChange={this.handlePageClick} 
+                        containerClassName={'pagination'}
+                        activeClassName={'activePagination'}
+                        />
+                    </div>
+                </div>
+                <Modal isOpen={this.state.modalEditar}>
+                    <div className="modal-header">
+                        <h5 className="modal-title fs-2" id="exampleModalLabel">Editar producto</h5>
+                    </div>
+                    <ModalBody>
+                        <form id="formEditar">
+                            <div className="modal-body">
+                                <div className="form-group">
+                                    <label for="ID" className="col-form-label">ID: </label>
+                                    <input type="text" className="form-control border-dark" name="id" id="id" value={this.state.producto.id} readOnly />
+                                </div>
+                                <div className="form-group">
+                                    <label for="nombre" className="col-form-label">Nombre: </label>
+                                    <input type="text" className="form-control border-dark" name="nombre" id="nombre" value={this.state.producto.nombre} onChange={this.handleChange} />
+                                </div>
+                                <div className="form-group">
+                                    <label for="descripcion" className="col-form-label">Descripción: </label>
+                                    <input type="text" className="form-control border-dark" name="descripcion" id="descripcion" value={this.state.producto.descripcion} onChange={this.handleChange} />
+                                </div>
+                                <div className="form-group">
+                                    <label for="valorUnitario" className="col-form-label">Valor Unitario: </label>
+                                    <input type="number" className="form-control border-dark" name="valorUnitario" id="valorUnitario" value={this.state.producto.valorUnitario} onChange={this.handleChange} />
+                                </div>                                
+                                <div className="form-group">
+                                    <label for="Estado" className="col-form-label">Estado: </label>
+                                    <select className="form-select border-dark" name="estado" id="estado" value={this.state.producto.estado} onChange={this.handleChange}>
+                                        <option selected>Selecciona un Estado...</option>
+                                        <option name="estado" value="Disponible">Disponible</option>
+                                        <option name="estado" value="No Disponible">No Disponible</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => this.modalEditar()}>Cancelar</button>
+                                <button type="button" id="btnEditar" className="btn btn-primary" onClick={() => this.peticionPut(this.state.producto.id, this.state.producto)}>Actualizar</button>
+                            </div>
+                        </form>
+                    </ModalBody>
+                </Modal>
             </div>
-            </div>
-        </div>
-
-       {/* <!-- Modal 2 --> */}
-
-        <div className="modal" id="confirmEditProduct" tabindex="-1">
-            <div className="modal-dialog">
-            <div className="modal-content">
-                <div className="modal-header">
-                    <h5 className="modal-title">Producto Editado</h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div className="modal-body">
-                        <p>Se ha Editado el producto con id: ..., <br/>
-                        con nombre: ..., <br/>
-                        con la siguiente descripción: ..., <br/>
-                        y estado: ...</p>
-                </div>
-                <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>              
-                </div>
-                </div>
-            </div>
-        </div>
-        </Fragment>
-    )
-} 
-
-export default ListadoProductosPage;
+        );
+    }
+};
+export default ListadoProductos;

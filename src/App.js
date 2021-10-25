@@ -25,7 +25,7 @@ function App() {
         </Route>
         <Route path="/ListadoProductos" exact>          
           <ListadoProductosPage/>
-        </Route>
+        </Route>        
         <Route path="/Usuarios" exact>
           <BarraBusqueda/>
           <TablaUsuarios/>
