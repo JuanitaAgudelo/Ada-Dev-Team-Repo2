@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
 import Editar from "./img/edit-regular.svg";
 import Buscar from "./img/search-solid.svg";
+import Eliminar from "./img/trash-alt-regular.svg"
 import Axios from "axios";
 import apiBaseUrl from "../../shared/Utils/Api";
 import ReactPaginate from 'react-paginate';
@@ -14,7 +15,8 @@ class TablaUsuarios extends Component {
         page: 0,
         pages: 0,
         modalEditar: false,
-        busqueda:"",
+        modalEliminar: false,
+        busqueda: "",
         usuario: {
             id: null,
             correo: '',
@@ -25,7 +27,7 @@ class TablaUsuarios extends Component {
 
     peticionGet = () => {
         Axios.get(`${apiBaseUrl}/get-usuario`).then(response => {
-            const {perPage}=this.state;
+            const { perPage } = this.state;
             this.setState({
                 usuarios: response.data,
                 tablausuarios: response.data,
@@ -45,6 +47,12 @@ class TablaUsuarios extends Component {
     peticionPut = (id, usuario) => {
         Axios.put(`${apiBaseUrl}/update-usuario/` + id, usuario).then(response => {
             this.modalEditar();
+            this.peticionGet();
+        })
+    }
+    peticionDelete = (id) => {
+        Axios.delete( `${apiBaseUrl}/delete-usuario/` + id).then(response => {
+            this.setState({ modalEliminar: false });
             this.peticionGet();
         })
     }
@@ -72,15 +80,15 @@ class TablaUsuarios extends Component {
         });
         console.log(this.state.usuario);
     }
-    handlefilterChange=e=>{
+    handlefilterChange = e => {
         this.setState({
             busqueda: e.target.value
         });
         this.filtrar(e.target.value);
     }
-    filtrar=(terminoBusqueda)=>{
-        let resultadoBusqueda=this.state.tablausuarios.filter((elemento)=>{
-            if(elemento.id.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) || elemento.correo.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) || elemento.rol.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) || elemento.estado.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())){
+    filtrar = (terminoBusqueda) => {
+        let resultadoBusqueda = this.state.tablausuarios.filter((elemento) => {
+            if (elemento.id.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) || elemento.correo.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) || elemento.rol.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) || elemento.estado.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())) {
                 return elemento;
             }
         });
@@ -90,7 +98,7 @@ class TablaUsuarios extends Component {
     }
     handlePageClick = (e) => {
         let page = e.selected;
-        this.setState({page})
+        this.setState({ page })
     }
     componentDidMount() {
         this.peticionGet();
@@ -98,6 +106,7 @@ class TablaUsuarios extends Component {
     render() {
         const { page, perPage, pages, usuarios } = this.state;
         return (
+
             <div className="container">
                 <div class="container-fluid">
                     <div class="mt-5"></div>
@@ -105,7 +114,7 @@ class TablaUsuarios extends Component {
                     <div class="row">
                         <div class="col">
                             <form class="d-flex">
-                                <input class="form-control me-2" type="search" placeholder="Buscar usuario" aria-label="Search" value={this.state.busqueda} onChange={this.handlefilterChange}/>
+                                <input class="form-control me-2" type="search" placeholder="Buscar usuario" aria-label="Search" value={this.state.busqueda} onChange={this.handlefilterChange} />
                             </form>
                         </div>
                     </div>
@@ -125,7 +134,7 @@ class TablaUsuarios extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {usuarios.slice(page*perPage, (page+1)*perPage).map((usuario) => {
+                                    {usuarios.slice(page * perPage, (page + 1) * perPage).map((usuario) => {
                                         return (
                                             <tr key={usuario.id}>
                                                 <th scope="row">{usuario.id}</th>
@@ -137,6 +146,9 @@ class TablaUsuarios extends Component {
                                                         <button type="button" className="btn btn-warning btn-table" data-bs-toggle="modal"
                                                             data-bs-target="#modalCRU" onClick={() => { this.seleccionarUsuario(usuario); this.modalEditar() }}><img src={Editar} className="img-small-table"
                                                                 alt="Busqueda" /></button>
+                                                        <button type="button" className="btn btn-danger btn-table" data-bs-toggle="modal"
+                                                        onClick={()=>{this.seleccionarUsuario(usuario); this.setState({modalEliminar: true})}}><img src={Eliminar} className="img-small-table"
+                                                            alt="Busqueda" /></button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -150,12 +162,12 @@ class TablaUsuarios extends Component {
                 <div className="row">
                     <div className="col-sm-12">
                         <ReactPaginate
-                        previousLabel={'<-'} 
-                        nextLabel={'->'} 
-                        pageCount={pages}
-                        onPageChange={this.handlePageClick} 
-                        containerClassName={'pagination'}
-                        activeClassName={'activePagination'}
+                            previousLabel={'<-'}
+                            nextLabel={'->'}
+                            pageCount={pages}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={'pagination'}
+                            activeClassName={'activePagination'}
                         />
                     </div>
                 </div>
@@ -197,6 +209,16 @@ class TablaUsuarios extends Component {
                             </div>
                         </form>
                     </ModalBody>
+                </Modal>
+
+                <Modal isOpen={this.state.modalEliminar}>
+                    <ModalBody>
+                        Estás seguro que deseas eliminar al usuario {this.state.usuario && this.state.usuario.correo}
+                    </ModalBody>
+                    <ModalFooter>
+                        <button type="button" className="btn btn-danger" onClick={() => this.peticionDelete(this.state.usuario.id)}>Sí</button>
+                        <button type="button" className="btn btn-secondary" onClick={() => this.setState({ modalEliminar: false })}>No</button>
+                    </ModalFooter>
                 </Modal>
             </div>
         );

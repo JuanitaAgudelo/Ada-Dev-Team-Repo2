@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from "@auth0/auth0-react";
+
 ReactDOM.render(
   <Auth0Provider
-    domain="dev-7q5oljai.us.auth0.com"
-    clientId="YoKv5CXGd7801jvGsGSNJwHb1E74CTDo"
-    redirectUri={window.location.origin}
-  >
+  domain="dev-n6qk6y26.us.auth0.com"
+  clientId="8KAzwYU8lAR6XDu6IDNHVCFN68wJXc64"
+  redirectUri={window.location.origin}
+>
     <App />
   </Auth0Provider>,
   document.getElementById('root')

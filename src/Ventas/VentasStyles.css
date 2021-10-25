@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+body
+{   background-color: #ffff;
+    font-family: 'Roboto', sans-serif;
+}
+
+/*******************************************
+Header
+********************************************/
+
+.bg-primarycolor
+{
+    background-color: #3f51b5 !important;
+}
+.nav-link
+{
+    color: white;
+}
+.nav-link:hover{
+    color: white;
+}
+.nav-item{
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.nav-toggler{
+    width: 50px;
+}
+.active{
+    background-color: #303f9f !important;
+    color:white !important;
+}
+.nav-link{
+    border-radius: 20px;
+}
+.nav-link:hover{
+    background-color: #000983;
+}
+
+.user
+{
+    margin: 100px;
+    color: #ffff;
+}
+.user:hover{
+    color: #ffff;
+}
+
+.d-flex
+{
+    margin-right: 20%;
+    margin-left: 20%;
+}
+.modal-header{
+    background-color: #303f9f;
+    color: #ffff;
+}
+
+.modal-body{
+    background-color: #C5CAE9;
+}
+.modal-footer{
+    background-color: #C5CAE9;
+}
+.close{
+    background-color: #303f9f;
+    border:0;
+}
+.img-small{
+    max-height: 30px;
+    max-width: 30px;
+}
+.img-small-table{
+    max-height: 20px;
+    max-width: 20px;
+}
+.btn-table
+{
+    width: 50px;
+}
+.nav-toggler{
+    border-color: #303f9f;
+}
+#navbarDropdown{
+    margin-right: 30px;
+}
+#dropdown-user{
+    width: 120px;
+}
+#Buscar{
+    width: 90px;
+    height: 40px;
+}
+
+#usuario{
+    margin:1%;
+}
+#btnNuevo
+{
+    width: 200px;
+    margin-left: 30%;
+    margin-bottom: 10px;
+}
+#Agregar
+{
+    margin-left: 10px;
+}
+
+/*Cambio el tamaño*/
+#Logo
+{
+    width:12%;
+    height: 12%;
+    margin: 10px;
+    box-shadow: 3px 5px #161d49; 
+}
+
+.title, footer
+{
+    background-color: #F2F2F2;    
+    color: #827373; 
+    text-align: center;
+    padding: 10px;
+}
+
+.formVentas
+{
+   
+    /* width: 50vw; */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 30px;    
+}
+
+input, select{
+    background-color: #F2F2F2 !important;
+    border-radius: 10px !important;
+    color: #827373;
+    font-size: 12px !important;
+    padding: 15px;
+    margin: 5px;
+    width: 340px;
+}
+
+label{
+    color: #827373;
+    font-size: 12px !important;
+    margin: 15px;
+}
+
+button{
+    border-radius: 10px !important;
+    color: #FFFFFF !important;
+    box-shadow: 1px 3px #cbcfcb; 
+}
+
+footer
+{
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+    
+} 
+
+footer .imagenEquipo
+{
+    width:42%;
+    height: auto;
+    box-shadow: 1px 5px #cbcfcb;  
+  
+}
+
+footer .imagenMintic2022
+{  
+    width:50%;
+    height: auto;
+    box-shadow: 1px 5px #cbcfcb; 
+}
+
+
+

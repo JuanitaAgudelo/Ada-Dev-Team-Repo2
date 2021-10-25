@@ -1,29 +1,44 @@
-import {
-  BrowserRouter as Router, Switch, Route,
-  Link
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, 
+  Link} from 'react-router-dom';
+import Login from './login/login';
+import TablaUsuarios from './Usuario-roles/Tabla-usuarios/TablaUsuarios';
 import HeaderComponent from './shared/components/header/HeaderComponent';
 import FooterComponent from './shared/components/footer/FooterComponent';
-import TablaUsuarios from './Usuario-roles/Tabla-usuarios/TablaUsuarios';
+import Home from './Home/Home';
+import Ventas from './Ventas/Ventas';
+import InformeVentas from './InformeVentas/InformeVentas';
+
+
 function App() {
   return (
     <Router>
-      <HeaderComponent />
+      
       <Switch>
-        <Route path="/Home" exact>
-          <h1>Home</h1>
+        <Route path="/home" exact>
+          <HeaderComponent/>
+          <Home /> 
+          <FooterComponent/>
+        </Route>
+        <Route path="/" exact>
+          <Login />
         </Route>
         <Route path="/Ventas" exact>
-          <h1>Ventas</h1>
+          <HeaderComponent/>
+          <Ventas />
+          <FooterComponent/>
         </Route>
         <Route path="/Productos" exact>
-          <h1>Productos</h1>
+          <HeaderComponent/>
+          <InformeVentas/>
+          <FooterComponent/>
         </Route>
         <Route path="/Usuarios" exact>
-          <TablaUsuarios />
+          <HeaderComponent/>
+          <TablaUsuarios/>
+          <FooterComponent/>
         </Route>
       </Switch>
-      <FooterComponent/>
+      
     </Router>
   );
 }
