@@ -5,15 +5,14 @@ import HeaderComponent from '../shared/components/header/HeaderComponent';
 import FooterComponent from '../shared/components/footer/FooterComponent';
 import Axios from "axios";
 import apiBaseUrl from "../shared/Utils/Api";
-
-
+import { useParams } from 'react-router-dom';
 function ProductosPage(){
 
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [valorUnitario, setValorUnitario] = useState(0);
     const [estado, setEstado] = useState("");
-    
+    const {correo}=useParams()
     const addProduct = () => {
         alert("ingrese aqui")
         Axios.post(`${apiBaseUrl}/add-product`,
