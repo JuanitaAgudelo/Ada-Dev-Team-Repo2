@@ -114,7 +114,7 @@ function Ventas() {
 
                             <div className="d-grid gap-2 d-md-block">
                             <a href="#" class="cta"><button class="btn btn-success" type="submit" onClick={addVenta}>Registrar</button></a>
-                                <button className="btn btn-info mx-2" type="button"><NavLink to={`InformeVentas/${correo}`} >Consultar ventas</NavLink></button>
+                                <button className="btn btn-info mx-2" type="button"><NavLink to={`/InformeVentas/${correo}`} >Consultar ventas</NavLink></button>
                             </div>
                         </div>
                     </div>
