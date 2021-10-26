@@ -66,7 +66,7 @@ function ProductosPage(){
 
                                 <button type="submit" className="btn btn-primary mx-2" onClick={addProduct}>Registrar</button>                      
                                 
-                                <button className="btn btn-info mx-2" type="button"><NavLink to={`/ListadoProductosPage/${correo}`}  >Consultar</NavLink></button>
+                                <button className="btn btn-info mx-2" type="button"><NavLink to={`/ListadoProductos/${correo}`}  >Consultar</NavLink></button>
                             </div>
                     </div>
                 </form>
