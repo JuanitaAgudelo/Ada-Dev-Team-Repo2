@@ -20,7 +20,6 @@ function App() {
         <Route path="/home/:correo" exact>
           <HeaderComponent/>
           <Home /> 
-          <FooterComponent/>
         </Route>
         <Route path="/" exact>
           <Login />
@@ -28,27 +27,22 @@ function App() {
         <Route path="/Ventas/:correo" exact>
           <HeaderComponent/>
           <Ventas />
-          <FooterComponent/>
         </Route>
         <Route path="/InformeVentas/:correo" exact>    
           <HeaderComponent/>      
           <InformeVentas/>
-          <FooterComponent/>
         </Route>
         <Route path="/Productos/:correo" exact>
           <HeaderComponent/>
           <ProductosPage/>
-          <FooterComponent/>
         </Route>
         <Route path="/ListadoProductos/:correo" exact>    
           <HeaderComponent/>      
           <ListadoProductos/>
-          <FooterComponent/>
         </Route>
         <Route path="/Usuarios/:correo" exact>
           <HeaderComponent/>
           <TablaUsuarios/>
-          <FooterComponent/>
         </Route>
       </Switch>
       

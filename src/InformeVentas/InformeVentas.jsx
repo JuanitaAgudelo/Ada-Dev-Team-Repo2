@@ -14,7 +14,7 @@ class InformeVentas extends Component {
     state = {
         ventas: [],
         tablaventas: [],
-        perPage: 4,
+        perPage: 10,
         page: 0,
         pages: 0,
         modalEditar: false,
