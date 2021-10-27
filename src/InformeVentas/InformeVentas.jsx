@@ -153,6 +153,7 @@ class InformeVentas extends Component {
                                         <th scope="col">Vendedor </th>
                                         <th scope="col">Usuario ID </th>
                                         <th scope="col">Producto ID </th>
+                                        <th scope="col">Acciones </th>
                                     </tr>
                                 </thead>
                                 <tbody>
