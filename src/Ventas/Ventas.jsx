@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import cheque from "./img/cheque.png";
+import realizado from "./img/realizado.png"
 import "./VentasStyles.css";
 import axios from 'axios';
 import apiBaseUrl from "../shared/Utils/Api";
