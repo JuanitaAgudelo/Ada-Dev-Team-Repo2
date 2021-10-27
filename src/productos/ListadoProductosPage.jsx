@@ -18,6 +18,7 @@ class ListadoProductos extends Component {
         pages: 0,
         modalEditar: false,
         modalEliminar: false,
+        modalAceptado:false,
         busqueda:"",
         producto: {
             id: 0,
@@ -47,6 +48,7 @@ class ListadoProductos extends Component {
         Axios.put(`${apiBaseUrl}/update-product/` + id, producto).then(response => {
             this.modalEditar();
             this.peticionGet();
+            this.state.modalAceptado= true
         })
     }
     peticionDelete = (id) => {
@@ -222,6 +224,16 @@ class ListadoProductos extends Component {
                     <ModalFooter>
                         <button type="button" className="btn btn-danger" onClick={() => {this.peticionDelete(this.state.producto.id)}}>Sí</button>
                         <button type="button" className="btn btn-secondary" onClick={() => this.setState({ modalEliminar: false })}>No</button>
+                    </ModalFooter>
+                </Modal>
+                <Modal isOpen={this.state.modalAceptado}>
+                    <ModalBody>
+                        Producto Actualizado id: {this.state.producto.id}
+                    </ModalBody>
+                    <ModalFooter>
+                        
+                        <button type="submit" className="btn btn-secondary" onClick={() => this.setState({ modalAceptado: false })}>Aceptar</button>
+                    
                     </ModalFooter>
                 </Modal>
             </div>

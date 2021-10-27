@@ -1,13 +1,25 @@
 import React, { Fragment, useState, useEffect, Route } from 'react';
 import { NavLink } from 'react-router-dom';
 import './productosStyles.css';
-import HeaderComponent from '../shared/components/header/HeaderComponent';
-import FooterComponent from '../shared/components/footer/FooterComponent';
 import Axios from "axios";
 import apiBaseUrl from "../shared/Utils/Api";
 
 
 function ProductosPage(){
+
+    const {correo}=useParams()
+
+    const[rol, setRol]=useState({ usuario: [] });
+
+    const getRol=()=>{
+        axios.get(`${apiBaseUrl}/get-informacion-usuario/${correo}`).then((response)=>{
+            setRol(response.data[0])  
+        }
+    );}
+    useEffect(() => {
+        getRol();
+    }, []);
+    console.log(rol.rol)
 
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
@@ -15,18 +27,23 @@ function ProductosPage(){
     const [estado, setEstado] = useState("");
     
     const addProduct = () => {
-        alert("ingrese aqui")
+        if (nombre=='' || descripcion=='' || valorUnitario==0 || estado==''){
+            alert('Todos los campos son obligarios')
+       }else{
         Axios.post(`${apiBaseUrl}/add-product`,
             {
                 nombre: nombre,
                 descripcion: descripcion, 
                 valorUnitario: valorUnitario,
                 estado: estado
-               
+            
             }
+
         );
-        alert(nombre)
-        //const jsonResponse = await response.json();
+
+        alert('se registró el producto correctamente ')
+
+       }
         
     };
 
@@ -67,7 +84,7 @@ function ProductosPage(){
 
                                 <button type="submit" className="btn btn-primary mx-2" onClick={addProduct}>Registrar</button>                      
                                 
-                                <button className="btn btn-info mx-2" type="button"><NavLink to="/ListadoProductos" >Consultar</NavLink></button>
+                                <button className="btn btn-info mx-2" type="button"><NavLink to={`/ListadoProductosPage/${correo}`} >Consultar</NavLink></button>
                             </div>
                     </div>
                 </form>

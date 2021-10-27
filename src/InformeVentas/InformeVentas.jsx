@@ -19,6 +19,7 @@ class InformeVentas extends Component {
         pages: 0,
         modalEditar: false,
         modalEliminar: false,
+        modalAceptado:false,
         busqueda:"",
         venta: {
             id: null,
@@ -50,6 +51,7 @@ class InformeVentas extends Component {
         Axios.put(`${apiBaseUrl}/update-venta/` + id, ventas).then(response => {
             this.modalEditar();
             this.peticionGet();
+            this.state.modalAceptado= true
         })
     }
     peticionDelete = (id) => {
@@ -267,6 +269,18 @@ class InformeVentas extends Component {
                         <button type="button" className="btn btn-secondary" onClick={() => this.setState({ modalEliminar: false })}>No</button>
                     </ModalFooter>
                 </Modal>
+
+                <Modal isOpen={this.state.modalAceptado}>
+                    <ModalBody>
+                        Venta Actualizada  {this.state.venta.id && this.state.venta.nombreCliente}
+                    </ModalBody>
+                    <ModalFooter>
+                        
+                        <button type="submit" className="btn btn-secondary" onClick={() => this.setState({ modalAceptado: false })}>Aceptar</button>
+                    
+                    </ModalFooter>
+                </Modal>
+
             </div>
         );
     }

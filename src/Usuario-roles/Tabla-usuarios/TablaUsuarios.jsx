@@ -16,6 +16,7 @@ class TablaUsuarios extends Component {
         pages: 0,
         modalEditar: false,
         modalEliminar: false,
+        modalAceptado:false,
         busqueda: "",
         usuario: {
             id: null,
@@ -48,6 +49,7 @@ class TablaUsuarios extends Component {
         Axios.put(`${apiBaseUrl}/update-usuario/` + id, usuario).then(response => {
             this.modalEditar();
             this.peticionGet();
+            this.state.modalAceptado= true
         })
     }
     peticionDelete = (id) => {
@@ -221,6 +223,17 @@ class TablaUsuarios extends Component {
                     <ModalFooter>
                         <button type="button" className="btn btn-danger" onClick={() => this.peticionDelete(this.state.usuario.id)}>Sí</button>
                         <button type="button" className="btn btn-secondary" onClick={() => this.setState({ modalEliminar: false })}>No</button>
+                    </ModalFooter>
+                </Modal>
+
+                <Modal isOpen={this.state.modalAceptado}>
+                    <ModalBody>
+                        Usuario Actualizado id: {this.state.usuario.id }
+                    </ModalBody>
+                    <ModalFooter>
+                        
+                        <button type="submit" className="btn btn-secondary" onClick={() => this.setState({ modalAceptado: false })}>Aceptar</button>
+                    
                     </ModalFooter>
                 </Modal>
             </div>

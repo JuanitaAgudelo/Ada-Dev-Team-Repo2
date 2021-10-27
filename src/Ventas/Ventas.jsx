@@ -113,12 +113,21 @@ function Ventas() {
                             </div>
 
                             <div className="d-grid gap-2 d-md-block">
-                            <a href="#" class="cta"><button class="btn btn-success" type="submit" onClick={addVenta}>Registrar</button></a>
-                                <button className="btn btn-info mx-2" type="button"><NavLink to={`/Ventas/${correo}`} >Consultar ventas</NavLink></button>
+                            <a href="#" class="cta"><button class="btn btn-success" type="submit" data-bs-toggle="modal" data-bs-target="#modal2" onClick={addVenta}>Registrar</button></a>
+                                <button className="btn btn-info mx-2" type="button"><NavLink to={`/InformeVentas/${correo}`} >Consultar ventas</NavLink></button>
                             </div>
                         </div>
                     </div>
-                    
+                </div>
+            </div>
+
+            <div class="modal fade" tabindex="-1" id="modal2">
+                <div class="modal-dialog modal-sm modal-dialog-centered ">
+                    <div class="modal-content borde">
+                        <div class="modal-body">
+                            <img src={realizado} width="50px"/>
+                            Se registró la venta correctamente </div>
+                    </div>
                 </div>
             </div>
 
