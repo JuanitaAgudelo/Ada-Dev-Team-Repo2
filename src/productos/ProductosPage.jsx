@@ -14,7 +14,6 @@ function ProductosPage(){
     const [estado, setEstado] = useState("");
     const {correo}=useParams()
     const addProduct = () => {
-        alert("ingrese aqui")
         Axios.post(`${apiBaseUrl}/add-product`,
             {
                 nombre: nombre,
@@ -23,10 +22,7 @@ function ProductosPage(){
                 estado: estado
                
             }
-        );
-        alert(nombre)
-        //const jsonResponse = await response.json();
-        
+        ); 
     };
 
 
