@@ -14,7 +14,7 @@ class InformeVentas extends Component {
     state = {
         ventas: [],
         tablaventas: [],
-        perPage: 4,
+        perPage: 10,
         page: 0,
         pages: 0,
         modalEditar: false,
@@ -155,6 +155,7 @@ class InformeVentas extends Component {
                                         <th scope="col">Vendedor </th>
                                         <th scope="col">Usuario ID </th>
                                         <th scope="col">Producto ID </th>
+                                        <th scope="col">Acciones </th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -3,8 +3,7 @@ import { NavLink } from 'react-router-dom';
 import './productosStyles.css';
 import Axios from "axios";
 import apiBaseUrl from "../shared/Utils/Api";
-
-
+import { useParams } from 'react-router-dom';
 function ProductosPage(){
 
     const {correo}=useParams()
@@ -25,7 +24,7 @@ function ProductosPage(){
     const [descripcion, setDescripcion] = useState("");
     const [valorUnitario, setValorUnitario] = useState(0);
     const [estado, setEstado] = useState("");
-    
+    const {correo}=useParams()
     const addProduct = () => {
         if (nombre=='' || descripcion=='' || valorUnitario==0 || estado==''){
             alert('Todos los campos son obligarios')

@@ -13,7 +13,7 @@ class ListadoProductos extends Component {
         
         productos: [],
         tablaProductos: [],
-        perPage: 5,
+        perPage: 10,
         page: 0,
         pages: 0,
         modalEditar: false,

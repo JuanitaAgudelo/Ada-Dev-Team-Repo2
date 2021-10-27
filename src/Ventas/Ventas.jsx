@@ -66,6 +66,11 @@ function Ventas() {
                     <div class="column-4">
                         <div class="formVentas">
                             <div class="input-group mb-3 formulario">
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Productos ID" onChange={(e)=>{
+                                    setProductos_id(e.target.value)
+                                }}/>
+                            </div>
+                            <div class="input-group mb-3 formulario">
                                 <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Valor Unitario" onChange={(e)=>{
                                     setPrecioUnitario(e.target.value)
                                 }}/>
@@ -106,11 +111,7 @@ function Ventas() {
                                     setUsuarios_id(e.target.value)
                                 }}/>
                             </div>
-                            <div class="input-group mb-3 formulario">
-                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Productos ID" onChange={(e)=>{
-                                    setProductos_id(e.target.value)
-                                }}/>
-                            </div>
+                            
 
                             <div className="d-grid gap-2 d-md-block">
                             <a href="#" class="cta"><button class="btn btn-success" type="submit" data-bs-toggle="modal" data-bs-target="#modal2" onClick={addVenta}>Registrar</button></a>
