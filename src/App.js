@@ -9,7 +9,7 @@ import Home from './Home/Home';
 import Ventas from './Ventas/Ventas';
 import InformeVentas from './InformeVentas/InformeVentas';
 import ProductosPage from './productos/ProductosPage';
-import ListadoProductos from './productos/ListadoProductosPage';
+import ListadoProductosPage from './productos/ListadoProductosPage';
 
 
 function App() {
@@ -36,9 +36,10 @@ function App() {
           <HeaderComponent/>
           <ProductosPage/>
         </Route>
-        <Route path="/ListadoProductos/:correo" exact>    
+        <Route path="/ListadoProductosPage/:correo" exact>    
           <HeaderComponent/>      
-          <ListadoProductos/>
+          <ListadoProductosPage/>
+          
         </Route>
         <Route path="/Usuarios/:correo" exact>
           <HeaderComponent/>
