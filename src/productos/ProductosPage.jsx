@@ -4,6 +4,7 @@ import './productosStyles.css';
 import Axios from "axios";
 import apiBaseUrl from "../shared/Utils/Api";
 import { useParams } from 'react-router-dom';
+import realizado from "./img/realizado.png"
 function ProductosPage(){
 
     const {correo}=useParams()
